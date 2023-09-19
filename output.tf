@@ -3,7 +3,7 @@
 ################################################################################
 
 output "bucket" {
-  value = var.feature_blob_storage_enabled ? module.blob_storage[0].bucket : ""
+  value = var.feature_blob_storage_enabled ? module.blob_storage[0].bucket : null
 }
 output "bucket_name" {
   value = var.feature_blob_storage_enabled ? module.blob_storage[0].name : ""
