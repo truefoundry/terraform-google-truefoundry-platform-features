@@ -28,15 +28,6 @@ variable "project" {
   description = "GCP Project"
   type        = string
 }
-################################################################################
-# IAM service account
-################################################################################
-
-variable "platform_user_force_destroy" {
-  description = "Enable force destroy of the user"
-  type        = bool
-  default     = true
-}
 
 ################################################################################
 # Blob Storage
