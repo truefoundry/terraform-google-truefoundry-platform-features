@@ -80,3 +80,12 @@ variable "feature_docker_registry_enabled" {
   type        = bool
   default     = true
 }
+
+################################################################################
+# Cloud integration
+################################################################################
+variable "feature_cloud_integration_enabled" {
+  description = "Enable cloud integration feature in the platform"
+  type        = bool
+  default     = true
+}
