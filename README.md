@@ -34,6 +34,7 @@ No resources.
 | <a name="input_blob_storage_override_name"></a> [blob\_storage\_override\_name](#input\_blob\_storage\_override\_name) | S3 bucket name. Only used if s3\_enable\_override is enabled | `string` | `""` | no |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name of the cluster | `string` | n/a | yes |
 | <a name="input_feature_blob_storage_enabled"></a> [feature\_blob\_storage\_enabled](#input\_feature\_blob\_storage\_enabled) | Enable blob storage feature in the platform | `bool` | `true` | no |
+| <a name="input_feature_cloud_integration_enabled"></a> [feature\_cloud\_integration\_enabled](#input\_feature\_cloud\_integration\_enabled) | Enable cloud integration feature in the platform | `bool` | `true` | no |
 | <a name="input_feature_docker_registry_enabled"></a> [feature\_docker\_registry\_enabled](#input\_feature\_docker\_registry\_enabled) | Enable docker registry feature in the platform | `bool` | `true` | no |
 | <a name="input_feature_secrets_enabled"></a> [feature\_secrets\_enabled](#input\_feature\_secrets\_enabled) | Enable secrets manager feature in the platform | `bool` | `true` | no |
 | <a name="input_project"></a> [project](#input\_project) | GCP Project | `string` | n/a | yes |
@@ -44,10 +45,10 @@ No resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_bucket"></a> [bucket](#output\_bucket) | n/a |
-| <a name="output_bucket_name"></a> [bucket\_name](#output\_bucket\_name) | n/a |
-| <a name="output_bucket_url"></a> [bucket\_url](#output\_bucket\_url) | n/a |
-| <a name="output_serviceaccount_keys"></a> [serviceaccount\_keys](#output\_serviceaccount\_keys) | n/a |
-| <a name="output_serviceaccount_name"></a> [serviceaccount\_name](#output\_serviceaccount\_name) | n/a |
-| <a name="output_serviceaccount_roles"></a> [serviceaccount\_roles](#output\_serviceaccount\_roles) | n/a |
+| <a name="output_artifact_registry_url"></a> [artifact\_registry\_url](#output\_artifact\_registry\_url) | Artifact registry URL to connect |
+| <a name="output_bucket_name"></a> [bucket\_name](#output\_bucket\_name) | Name of the bucket |
+| <a name="output_bucket_url"></a> [bucket\_url](#output\_bucket\_url) | URL of the bucket |
+| <a name="output_serviceaccount_keys"></a> [serviceaccount\_keys](#output\_serviceaccount\_keys) | Service account keys |
+| <a name="output_serviceaccount_name"></a> [serviceaccount\_name](#output\_serviceaccount\_name) | Name of the service account |
+| <a name="output_serviceaccount_roles"></a> [serviceaccount\_roles](#output\_serviceaccount\_roles) | Roles assigned to the TrueFoundry paltform GCP service account |
 <!-- END_TF_DOCS -->

@@ -3,6 +3,7 @@ locals {
     "terraform-module" = "truefoundry-google-platform-features"
     "terraform"        = "true"
     "cluster-name"     = var.cluster_name
+    "truefoundry"      = "managed"
     },
     var.tags
   )
@@ -13,6 +14,7 @@ locals {
     var.feature_docker_registry_enabled ? ["${var.project}=>roles/artifactregistry.admin"] : [],
     var.feature_secrets_enabled ? ["${var.project}=>roles/secretmanager.admin"] : [],
     var.feature_blob_storage_enabled ? ["${var.project}=>roles/iam.serviceAccountTokenCreator"] : [],
-    var.feature_blob_storage_enabled ? ["${var.project}=>roles/storage.admin"] : []
+    var.feature_blob_storage_enabled ? ["${var.project}=>roles/storage.admin"] : [],
+    var.feature_cloud_integration_enabled ? ["${var.project}=>roles/container.clusterViewer", "${var.project}=>roles/container.viewer"] : []
   )
 }
