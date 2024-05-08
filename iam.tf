@@ -21,20 +21,6 @@ resource "google_project_iam_custom_role" "artifact_registry_tfy_role" {
   ]
 }
 
-resource "google_project_iam_custom_role" "gcs_tfy_role" {
-  count = var.feature_blob_storage_enabled ? 1 : 0
-
-  role_id     = replace("${local.trufoundry_platform_resources}_gcs_tfy_role", "-", "_")
-  title       = "GCS TFY Role"
-  description = "Role to manage GCS buckets starting with tfy"
-  permissions = [
-    "storage.buckets.get",
-    "storage.buckets.create",
-    "storage.buckets.delete",
-    "storage.buckets.update",
-  ]
-}
-
 resource "google_project_iam_member" "artifact_registry_role_binding" {
   count   = var.feature_docker_registry_enabled ? 1 : 0
   project = var.project
@@ -66,12 +52,12 @@ resource "google_project_iam_member" "gcs_role_binding" {
   count = var.feature_blob_storage_enabled ? 1 : 0
 
   project = var.project
-  role    = google_project_iam_custom_role.gcs_tfy_role[0].name
+  role    = "roles/storage.objectAdmin"
   member  = module.service_accounts.iam_email
 
   condition {
     title       = "Restrict to tfy storage buckets"
     description = "Allows access to buckets that start with 'tfy'"
-    expression  = "resource.name.startsWith('projects/${var.project}/buckets/tfy')"
+    expression  = "resource.name.startsWith('tfy')"
   }
 }
