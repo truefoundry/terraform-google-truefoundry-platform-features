@@ -26,8 +26,6 @@ Truefoundry Google Cloud platform features module
 
 | Name | Type |
 |------|------|
-| [google_project_iam_custom_role.artifact_registry_tfy_role](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_custom_role) | resource |
-| [google_project_iam_member.artifact_registry_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.gcs_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.secret_manager_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
 | [google_project.project](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/data-sources/project) | data source |
