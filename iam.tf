@@ -10,7 +10,7 @@ module "service_accounts" {
 }
 
 resource "google_project_iam_custom_role" "artifact_registry_tfy_role" {
-  count       = var.feature_docker_registry_enabled ? 1 : 0
+  count = var.feature_docker_registry_enabled ? 1 : 0
 
   role_id     = replace("${local.trufoundry_platform_resources}_artifcaft_registry_tfy_role", "-", "_")
   title       = "Artifact Registry TFY Role"
@@ -22,7 +22,7 @@ resource "google_project_iam_custom_role" "artifact_registry_tfy_role" {
 }
 
 resource "google_project_iam_custom_role" "gcs_tfy_role" {
-  count       = var.feature_blob_storage_enabled ? 1 : 0
+  count = var.feature_blob_storage_enabled ? 1 : 0
 
   role_id     = replace("${local.trufoundry_platform_resources}_gcs_tfy_role", "-", "_")
   title       = "GCS TFY Role"
@@ -36,10 +36,10 @@ resource "google_project_iam_custom_role" "gcs_tfy_role" {
 }
 
 resource "google_project_iam_member" "artifact_registry_role_binding" {
-  count       = var.feature_docker_registry_enabled ? 1 : 0
-  project     = var.project
-  role        = google_project_iam_custom_role.artifact_registry_tfy_role[0].name
-  member      = module.service_accounts.iam_email
+  count   = var.feature_docker_registry_enabled ? 1 : 0
+  project = var.project
+  role    = google_project_iam_custom_role.artifact_registry_tfy_role[0].name
+  member  = module.service_accounts.iam_email
 
   condition {
     title       = "Restrict to tfy repositories"
@@ -49,7 +49,7 @@ resource "google_project_iam_member" "artifact_registry_role_binding" {
 }
 
 resource "google_project_iam_member" "secret_manager_role_binding" {
-  count       = var.feature_secrets_enabled ? 1 : 0
+  count = var.feature_secrets_enabled ? 1 : 0
 
   project = var.project
   role    = "roles/secretmanager.admin"
@@ -63,11 +63,11 @@ resource "google_project_iam_member" "secret_manager_role_binding" {
 }
 
 resource "google_project_iam_member" "gcs_role_binding" {
-  count       = var.feature_blob_storage_enabled ? 1 : 0
+  count = var.feature_blob_storage_enabled ? 1 : 0
 
-  project     = var.project
-  role        = google_project_iam_custom_role.gcs_tfy_role[0].name
-  member      = module.service_accounts.iam_email
+  project = var.project
+  role    = google_project_iam_custom_role.gcs_tfy_role[0].name
+  member  = module.service_accounts.iam_email
 
   condition {
     title       = "Restrict to tfy storage buckets"
