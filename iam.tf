@@ -30,7 +30,7 @@ resource "google_project_iam_member" "artifact_registry_role_binding" {
   condition {
     title       = "Restrict to tfy repositories"
     description = "Allows access to repositories that start with 'tfy'"
-    expression  = "resource.name.startsWith('projects/${var.project}/locations/-/repositories/tfy')"
+    expression  = "resource.name.startsWith('projects/${data.google_project.project.number}/locations/-/repositories/tfy')"
   }
 }
 
@@ -44,7 +44,7 @@ resource "google_project_iam_member" "secret_manager_role_binding" {
   condition {
     title       = "Restrict to tfy secrets"
     description = "Allows access to secrets that start with 'tfy'"
-    expression  = "resource.name.startsWith('projects/${var.project}/secrets/tfy')"
+    expression  = "resource.name.startsWith('projects/${data.google_project.project.number}/secrets/tfy')"
   }
 }
 
