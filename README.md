@@ -20,14 +20,21 @@ Truefoundry Google Cloud platform features module
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_blob_storage"></a> [blob\_storage](#module\_blob\_storage) | terraform-google-modules/cloud-storage/google//modules/simple_bucket | 4.0.1 |
-| <a name="module_service_accounts"></a> [service\_accounts](#module\_service\_accounts) | terraform-google-modules/service-accounts/google | 4.2.1 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
+| [google_project_iam_custom_role.gcs_tfy_role](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_custom_role) | resource |
+| [google_project_iam_custom_role.secret_manager_tfy_role](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_custom_role) | resource |
+| [google_project_iam_member.artifact_registry_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.container_cluster_viewer_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.container_viewer_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.gcs_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.secret_manager_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.token_creator_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
+| [google_service_account.service_account](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/service_account) | resource |
+| [google_service_account_key.service_account_key](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/service_account_key) | resource |
 | [google_project.project](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/data-sources/project) | data source |
 
 ## Inputs
@@ -54,7 +61,6 @@ Truefoundry Google Cloud platform features module
 | <a name="output_artifact_registry_url"></a> [artifact\_registry\_url](#output\_artifact\_registry\_url) | Artifact registry URL to connect |
 | <a name="output_bucket_name"></a> [bucket\_name](#output\_bucket\_name) | Name of the bucket |
 | <a name="output_bucket_url"></a> [bucket\_url](#output\_bucket\_url) | URL of the bucket |
-| <a name="output_serviceaccount_keys"></a> [serviceaccount\_keys](#output\_serviceaccount\_keys) | Service account keys |
+| <a name="output_serviceaccount_key"></a> [serviceaccount\_key](#output\_serviceaccount\_key) | Service account keys |
 | <a name="output_serviceaccount_name"></a> [serviceaccount\_name](#output\_serviceaccount\_name) | Name of the service account |
-| <a name="output_serviceaccount_roles"></a> [serviceaccount\_roles](#output\_serviceaccount\_roles) | Roles assigned to the TrueFoundry paltform GCP service account |
 <!-- END_TF_DOCS -->
