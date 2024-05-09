@@ -3,12 +3,12 @@ resource "google_service_account" "truefoundry_platform_feature_service_account"
   account_id   = local.serviceaccount_name
   project      = var.project
   display_name = "Terraform-managed truefoundry platform service account"
-  description = "Truefoundry platform user with access to artifact registry, blob storage and secrets manager"
+  description  = "Truefoundry platform user with access to artifact registry, blob storage and secrets manager"
 }
 
 // custom role for secret manager
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_secret_manager_role" {
-  count       = var.feature_secrets_enabled ? 1 : 0
+  count = var.feature_secrets_enabled ? 1 : 0
 
   role_id     = replace("${local.trufoundry_platform_resources}_bucket_secret_manager_tfy_role", "-", "_")
   title       = replace("${local.trufoundry_platform_resources}_bucket_secret_manager_tfy_role", "-", "_")
@@ -26,7 +26,7 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_secret_m
 
 // custom role for GCS
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_gcs_bucket_role" {
-  count       = var.feature_blob_storage_enabled ? 1 : 0
+  count = var.feature_blob_storage_enabled ? 1 : 0
 
   role_id     = replace("${local.trufoundry_platform_resources}_bucket_gcs_tfy_role", "-", "_")
   title       = replace("${local.trufoundry_platform_resources}_bucket_gcs_tfy_role", "-", "_")
