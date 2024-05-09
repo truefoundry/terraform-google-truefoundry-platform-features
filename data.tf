@@ -1,1 +1,1 @@
-data "google_project" "project" {}
+data "google_project" "truefoundry_platform_feature_project" {}
