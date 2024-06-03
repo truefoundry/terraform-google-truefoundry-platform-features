@@ -20,6 +20,10 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_secret_m
     "secretmanager.secrets.delete",
     "secretmanager.secrets.update",
     "secretmanager.versions.access",
+    "secretmanager.versions.list",
+    "secretmanager.versions.get",
+    "secretmanager.versions.add",
+    "secretmanager.versions.destroy",
     "resourcemanager.projects.get",
   ]
 }
