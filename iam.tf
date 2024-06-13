@@ -100,7 +100,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_artifact_regi
 
 // role binding container cluster viewer role to service account
 resource "google_project_iam_member" "truefoundry_platform_feature_container_cluster_viewer_role_binding" {
-  count = var.feature_cloud_integration_enabled ? 1 : 0
+  count = var.feature_cluster_integration_enabled ? 1 : 0
 
   project = var.project
   role    = "roles/container.clusterViewer"
@@ -109,7 +109,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_container_clu
 
 // role binding container viewer role to service account
 resource "google_project_iam_member" "truefoundry_platform_feature_container_viewer_role_binding" {
-  count = var.feature_cloud_integration_enabled ? 1 : 0
+  count = var.feature_cluster_integration_enabled ? 1 : 0
 
   project = var.project
   role    = "roles/container.viewer"
