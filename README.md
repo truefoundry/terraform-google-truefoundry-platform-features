@@ -25,6 +25,7 @@ Truefoundry Google Cloud platform features module
 
 | Name | Type |
 |------|------|
+| [google_project_iam_custom_role.truefoundry_platform_feature_artifact_registry_role](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/resources/project_iam_custom_role) | resource |
 | [google_project_iam_custom_role.truefoundry_platform_feature_cluster_integration_role](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/resources/project_iam_custom_role) | resource |
 | [google_project_iam_custom_role.truefoundry_platform_feature_gcs_bucket_role](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/resources/project_iam_custom_role) | resource |
 | [google_project_iam_custom_role.truefoundry_platform_feature_secret_manager_role](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/resources/project_iam_custom_role) | resource |
