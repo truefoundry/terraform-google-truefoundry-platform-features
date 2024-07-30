@@ -7,13 +7,13 @@ Truefoundry Google Cloud platform features module
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.4 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | 4.81.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | 4.85.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 4.81.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | 4.85.0 |
 
 ## Modules
 
@@ -25,17 +25,17 @@ Truefoundry Google Cloud platform features module
 
 | Name | Type |
 |------|------|
-| [google_project_iam_custom_role.truefoundry_platform_feature_gcs_bucket_role](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_custom_role) | resource |
-| [google_project_iam_custom_role.truefoundry_platform_feature_secret_manager_role](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_custom_role) | resource |
-| [google_project_iam_member.truefoundry_platform_feature_artifact_registry_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
-| [google_project_iam_member.truefoundry_platform_feature_container_cluster_viewer_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
-| [google_project_iam_member.truefoundry_platform_feature_container_viewer_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
-| [google_project_iam_member.truefoundry_platform_feature_gcs_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
-| [google_project_iam_member.truefoundry_platform_feature_secret_manager_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
-| [google_project_iam_member.truefoundry_platform_feature_token_creator_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/project_iam_member) | resource |
-| [google_service_account.truefoundry_platform_feature_service_account](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/service_account) | resource |
-| [google_service_account_key.truefoundry_platform_feature_service_account_key](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/resources/service_account_key) | resource |
-| [google_project.truefoundry_platform_feature_project](https://registry.terraform.io/providers/hashicorp/google/4.81.0/docs/data-sources/project) | data source |
+| [google_project_iam_custom_role.truefoundry_platform_feature_cluster_integration_role](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/resources/project_iam_custom_role) | resource |
+| [google_project_iam_custom_role.truefoundry_platform_feature_gcs_bucket_role](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/resources/project_iam_custom_role) | resource |
+| [google_project_iam_custom_role.truefoundry_platform_feature_secret_manager_role](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/resources/project_iam_custom_role) | resource |
+| [google_project_iam_member.truefoundry_platform_feature_artifact_registry_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.truefoundry_platform_feature_cluster_integration_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.truefoundry_platform_feature_gcs_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.truefoundry_platform_feature_secret_manager_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.truefoundry_platform_feature_token_creator_role_binding](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/resources/project_iam_member) | resource |
+| [google_service_account.truefoundry_platform_feature_service_account](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/resources/service_account) | resource |
+| [google_service_account_key.truefoundry_platform_feature_service_account_key](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/resources/service_account_key) | resource |
+| [google_project.truefoundry_platform_feature_project](https://registry.terraform.io/providers/hashicorp/google/4.85.0/docs/data-sources/project) | data source |
 
 ## Inputs
 
