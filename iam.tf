@@ -160,15 +160,6 @@ resource "google_project_iam_member" "truefoundry_platform_feature_token_creator
   member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
 }
 
-# // role binding artifact registry role to service account
-# resource "google_project_iam_member" "truefoundry_platform_feature_artifact_registry_role_binding" {
-#   count = var.feature_docker_registry_enabled ? 1 : 0
-
-#   project = var.project
-#   role    = "roles/artifactregistry.admin"
-#   member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
-# }
-
 // service account key
 resource "google_service_account_key" "truefoundry_platform_feature_service_account_key" {
   service_account_id = google_service_account.truefoundry_platform_feature_service_account.id
