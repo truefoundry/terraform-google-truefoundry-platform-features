@@ -54,6 +54,31 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_gcs_buck
   ]
 }
 
+// cluster integration role
+resource "google_project_iam_custom_role" "truefoundry_platform_feature_cluster_integration_role" {
+  count = var.feature_cluster_integration_enabled ? 1 : 0
+
+  role_id     = replace("${local.trufoundry_platform_resources}_cluster_integration_tfy_role", "-", "_")
+  title       = replace("${local.trufoundry_platform_resources}_cluster_integration_tfy_role", "-", "_")
+  description = "TrueFoundry platform feature role to view GKE cluster"
+  permissions = [
+    "container.clusters.get",
+    "container.clusters.list",
+    "container.nodes.get",
+    "container.nodes.getStatus",
+    "container.nodes.list",
+    "resourcemanager.projects.get",
+  ]
+}
+
+resource "google_project_iam_member" "truefoundry_platform_feature_cluster_integration_role_binding" {
+  count = var.feature_cluster_integration_enabled ? 1 : 0
+
+  project = var.project
+  role    = google_project_iam_custom_role.truefoundry_platform_feature_cluster_integration_role[count.index].id
+  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+}
+
 // custom role binding with condition for secret manager role
 resource "google_project_iam_member" "truefoundry_platform_feature_secret_manager_role_binding" {
   count = var.feature_secrets_enabled ? 1 : 0
@@ -99,24 +124,6 @@ resource "google_project_iam_member" "truefoundry_platform_feature_artifact_regi
 
   project = var.project
   role    = "roles/artifactregistry.admin"
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
-}
-
-// role binding container cluster viewer role to service account
-resource "google_project_iam_member" "truefoundry_platform_feature_container_cluster_viewer_role_binding" {
-  count = var.feature_cluster_integration_enabled ? 1 : 0
-
-  project = var.project
-  role    = "roles/container.clusterViewer"
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
-}
-
-// role binding container viewer role to service account
-resource "google_project_iam_member" "truefoundry_platform_feature_container_viewer_role_binding" {
-  count = var.feature_cluster_integration_enabled ? 1 : 0
-
-  project = var.project
-  role    = "roles/container.viewer"
   member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
 }
 
