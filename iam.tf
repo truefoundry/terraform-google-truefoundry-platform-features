@@ -10,8 +10,8 @@ resource "google_service_account" "truefoundry_platform_feature_service_account"
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_secret_manager_role" {
   count = var.feature_secrets_enabled ? 1 : 0
 
-  role_id     = replace("${local.trufoundry_platform_resources}_bucket_secret_manager_tfy_role", "-", "_")
-  title       = replace("${local.trufoundry_platform_resources}_bucket_secret_manager_tfy_role", "-", "_")
+  role_id     = replace("${local.trufoundry_platform_resources}_bucket_secret_manager_role", "-", "_")
+  title       = replace("${local.trufoundry_platform_resources}_bucket_secret_manager_role", "-", "_")
   description = "TrueFoundry platform feature role to manage secrets in GSM"
   permissions = [
     "secretmanager.secrets.get",
@@ -28,12 +28,26 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_secret_m
   ]
 }
 
-// custom role for GCS
+resource "google_project_iam_member" "truefoundry_platform_feature_secret_manager_role_binding" {
+  count = var.feature_secrets_enabled ? 1 : 0
+
+  project = var.project
+  role    = google_project_iam_custom_role.truefoundry_platform_feature_secret_manager_role[count.index].id
+  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+
+  condition {
+    title       = "Condition to allow access to secrets starting with 'tfy'"
+    description = "TrueFoundry platform feature role to allows access to secrets that start with 'tfy'"
+    expression  = "resource.name.startsWith('projects/${data.google_project.truefoundry_platform_feature_project.number}/secrets/tfy')"
+  }
+}
+
+// custom role for GCS bucket
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_gcs_bucket_role" {
   count = var.feature_blob_storage_enabled ? 1 : 0
 
-  role_id     = replace("${local.trufoundry_platform_resources}_bucket_gcs_tfy_role", "-", "_")
-  title       = replace("${local.trufoundry_platform_resources}_bucket_gcs_tfy_role", "-", "_")
+  role_id     = replace("${local.trufoundry_platform_resources}_bucket_gcs_role", "-", "_")
+  title       = replace("${local.trufoundry_platform_resources}_bucket_gcs_role", "-", "_")
   description = "TrueFoundry platform feature role to manage GCS bucket"
   permissions = [
     "storage.objects.create",
@@ -53,13 +67,26 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_gcs_buck
     "resourcemanager.projects.get"
   ]
 }
+resource "google_project_iam_member" "truefoundry_platform_feature_gcs_role_binding" {
+  count = var.feature_blob_storage_enabled ? 1 : 0
+
+  project = var.project
+  role    = google_project_iam_custom_role.truefoundry_platform_feature_gcs_bucket_role[count.index].id
+  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+
+  condition {
+    title       = "Condition to allow access to truefoundry bucket"
+    description = "TrueFoundry platform feature role to allows access to buckets that start with 'tfy'"
+    expression  = "resource.name.startsWith('projects/_/buckets/${module.blob_storage[0].name}')"
+  }
+}
 
 // cluster integration role
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_cluster_integration_role" {
   count = var.feature_cluster_integration_enabled ? 1 : 0
 
-  role_id     = replace("${local.trufoundry_platform_resources}_cluster_integration_tfy_role", "-", "_")
-  title       = replace("${local.trufoundry_platform_resources}_cluster_integration_tfy_role", "-", "_")
+  role_id     = replace("${local.trufoundry_platform_resources}_cluster_integration_role", "-", "_")
+  title       = replace("${local.trufoundry_platform_resources}_cluster_integration_role", "-", "_")
   description = "TrueFoundry platform feature role to view GKE cluster"
   permissions = [
     "container.clusters.get",
@@ -79,34 +106,49 @@ resource "google_project_iam_member" "truefoundry_platform_feature_cluster_integ
   member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
 }
 
-// custom role binding with condition for secret manager role
-resource "google_project_iam_member" "truefoundry_platform_feature_secret_manager_role_binding" {
-  count = var.feature_secrets_enabled ? 1 : 0
+// artifact registry role
+resource "google_project_iam_custom_role" "truefoundry_platform_feature_artifact_registry_role" {
+  count = var.feature_docker_registry_enabled ? 1 : 0
 
-  project = var.project
-  role    = google_project_iam_custom_role.truefoundry_platform_feature_secret_manager_role[count.index].id
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
-
-  condition {
-    title       = "Condition to allow access to secrets starting with 'tfy'"
-    description = "TrueFoundry platform feature role to allows access to secrets that start with 'tfy'"
-    expression  = "resource.name.startsWith('projects/${data.google_project.truefoundry_platform_feature_project.number}/secrets/tfy')"
-  }
+  role_id     = replace("${local.trufoundry_platform_resources}_artifact_registry_role", "-", "_")
+  title       = replace("${local.trufoundry_platform_resources}_artifact_registry_role", "-", "_")
+  description = "TrueFoundry platform feature role for artifact registry"
+  permissions = [
+    "artifactregistry.dockerimages.get",
+    "artifactregistry.dockerimages.list",
+    "artifactregistry.locations.get",
+    "artifactregistry.locations.list",
+    "artifactregistry.repositories.get",
+    "artifactregistry.repositories.list",
+    "artifactregistry.repositories.create",
+    "artifactregistry.repositories.createTagBinding",
+    "artifactregistry.repositories.delete",
+    "artifactregistry.repositories.deleteArtifacts",
+    "artifactregistry.repositories.deleteTagBinding",
+    "artifactregistry.repositories.downloadArtifacts",
+    "artifactregistry.repositories.get",
+    "artifactregistry.repositories.getIamPolicy",
+    "artifactregistry.repositories.list",
+    "artifactregistry.repositories.listEffectiveTags",
+    "artifactregistry.repositories.listTagBindings",
+    "artifactregistry.repositories.update",
+    "artifactregistry.repositories.uploadArtifacts",
+    "artifactregistry.tags.get",
+    "artifactregistry.tags.list",
+    "artifactregistry.tags.create",
+    "artifactregistry.tags.update",
+    "artifactregistry.versions.get",
+    "artifactregistry.versions.list",
+    "artifactregistry.versions.delete"
+  ]
 }
 
-// custom role binding with condition for GCS role
-resource "google_project_iam_member" "truefoundry_platform_feature_gcs_role_binding" {
-  count = var.feature_blob_storage_enabled ? 1 : 0
+resource "google_project_iam_member" "truefoundry_platform_feature_artifact_registry_role_binding" {
+  count = var.feature_docker_registry_enabled ? 1 : 0
 
   project = var.project
-  role    = google_project_iam_custom_role.truefoundry_platform_feature_gcs_bucket_role[count.index].id
+  role    = google_project_iam_custom_role.truefoundry_platform_feature_artifact_registry_role[count.index].id
   member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
-
-  condition {
-    title       = "Condition to allow access to truefoundry bucket"
-    description = "TrueFoundry platform feature role to allows access to buckets that start with 'tfy'"
-    expression  = "resource.name.startsWith('projects/_/buckets/${module.blob_storage[0].name}')"
-  }
 }
 
 // role binding token creator role to service account
@@ -118,14 +160,14 @@ resource "google_project_iam_member" "truefoundry_platform_feature_token_creator
   member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
 }
 
-// role binding artifact registry role to service account
-resource "google_project_iam_member" "truefoundry_platform_feature_artifact_registry_role_binding" {
-  count = var.feature_docker_registry_enabled ? 1 : 0
+# // role binding artifact registry role to service account
+# resource "google_project_iam_member" "truefoundry_platform_feature_artifact_registry_role_binding" {
+#   count = var.feature_docker_registry_enabled ? 1 : 0
 
-  project = var.project
-  role    = "roles/artifactregistry.admin"
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
-}
+#   project = var.project
+#   role    = "roles/artifactregistry.admin"
+#   member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+# }
 
 // service account key
 resource "google_service_account_key" "truefoundry_platform_feature_service_account_key" {
