@@ -42,7 +42,7 @@ Truefoundry Google Cloud platform features module
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_blob_storage_cors_origins"></a> [blob\_storage\_cors\_origins](#input\_blob\_storage\_cors\_origins) | List of CORS origins for Mlfoundry bucket | `list(string)` | <pre>[<br>  "*"<br>]</pre> | no |
+| <a name="input_blob_storage_cors_origins"></a> [blob\_storage\_cors\_origins](#input\_blob\_storage\_cors\_origins) | List of CORS origins for Mlfoundry bucket | `list(string)` | <pre>[<br/>  "*"<br/>]</pre> | no |
 | <a name="input_blob_storage_enable_override"></a> [blob\_storage\_enable\_override](#input\_blob\_storage\_enable\_override) | Enable overriding name of s3 bucket. This will only be used if feature\_blob\_storage\_enabled is enabled. You need to pass s3\_override\_name to pass the bucket name | `bool` | `false` | no |
 | <a name="input_blob_storage_force_destroy"></a> [blob\_storage\_force\_destroy](#input\_blob\_storage\_force\_destroy) | Force destroy for mlfoundry s3 bucket | `bool` | `true` | no |
 | <a name="input_blob_storage_override_name"></a> [blob\_storage\_override\_name](#input\_blob\_storage\_override\_name) | S3 bucket name. Only used if s3\_enable\_override is enabled | `string` | `""` | no |
@@ -60,8 +60,11 @@ Truefoundry Google Cloud platform features module
 | Name | Description |
 |------|-------------|
 | <a name="output_artifact_registry_url"></a> [artifact\_registry\_url](#output\_artifact\_registry\_url) | Artifact registry URL to connect |
+| <a name="output_blob_storage_enabled"></a> [blob\_storage\_enabled](#output\_blob\_storage\_enabled) | Blob storage feature enabled |
 | <a name="output_bucket_name"></a> [bucket\_name](#output\_bucket\_name) | Name of the bucket |
 | <a name="output_bucket_url"></a> [bucket\_url](#output\_bucket\_url) | URL of the bucket |
+| <a name="output_docker_registry_enabled"></a> [docker\_registry\_enabled](#output\_docker\_registry\_enabled) | Docker registry feature enabled |
+| <a name="output_secret_manger_enabled"></a> [secret\_manger\_enabled](#output\_secret\_manger\_enabled) | Secret manager feature enabled |
 | <a name="output_serviceaccount_key"></a> [serviceaccount\_key](#output\_serviceaccount\_key) | Service account keys |
 | <a name="output_serviceaccount_name"></a> [serviceaccount\_name](#output\_serviceaccount\_name) | Name of the service account |
 <!-- END_TF_DOCS -->
