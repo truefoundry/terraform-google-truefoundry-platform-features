@@ -8,8 +8,8 @@ resource "google_service_account" "truefoundry_platform_feature_service_account"
 
 // custom role for secret manager
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_secret_manager_role" {
-  count = var.feature_secrets_enabled ? 1 : 0
-
+  count       = var.feature_secrets_enabled ? 1 : 0
+  project     = var.project
   role_id     = replace("${local.trufoundry_platform_resources}_bucket_secret_manager_role", "-", "_")
   title       = replace("${local.trufoundry_platform_resources}_bucket_secret_manager_role", "-", "_")
   description = "TrueFoundry platform feature role to manage secrets in GSM"
@@ -44,8 +44,8 @@ resource "google_project_iam_member" "truefoundry_platform_feature_secret_manage
 
 // custom role for GCS bucket
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_gcs_bucket_role" {
-  count = var.feature_blob_storage_enabled ? 1 : 0
-
+  count       = var.feature_blob_storage_enabled ? 1 : 0
+  project     = var.project
   role_id     = replace("${local.trufoundry_platform_resources}_bucket_gcs_role", "-", "_")
   title       = replace("${local.trufoundry_platform_resources}_bucket_gcs_role", "-", "_")
   description = "TrueFoundry platform feature role to manage GCS bucket"
@@ -83,8 +83,8 @@ resource "google_project_iam_member" "truefoundry_platform_feature_gcs_role_bind
 
 // cluster integration role
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_cluster_integration_role" {
-  count = var.feature_cluster_integration_enabled ? 1 : 0
-
+  count       = var.feature_cluster_integration_enabled ? 1 : 0
+  project     = var.project
   role_id     = replace("${local.trufoundry_platform_resources}_cluster_integration_role", "-", "_")
   title       = replace("${local.trufoundry_platform_resources}_cluster_integration_role", "-", "_")
   description = "TrueFoundry platform feature role to view GKE cluster"
@@ -108,8 +108,8 @@ resource "google_project_iam_member" "truefoundry_platform_feature_cluster_integ
 
 // artifact registry role
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_artifact_registry_role" {
-  count = var.feature_docker_registry_enabled ? 1 : 0
-
+  count       = var.feature_docker_registry_enabled ? 1 : 0
+  project     = var.project
   role_id     = replace("${local.trufoundry_platform_resources}_artifact_registry_role", "-", "_")
   title       = replace("${local.trufoundry_platform_resources}_artifact_registry_role", "-", "_")
   description = "TrueFoundry platform feature role for artifact registry"
