@@ -64,6 +64,7 @@ Truefoundry Google Cloud platform features module
 | <a name="output_bucket_name"></a> [bucket\_name](#output\_bucket\_name) | Name of the bucket |
 | <a name="output_bucket_url"></a> [bucket\_url](#output\_bucket\_url) | URL of the bucket |
 | <a name="output_docker_registry_enabled"></a> [docker\_registry\_enabled](#output\_docker\_registry\_enabled) | Docker registry feature enabled |
+| <a name="output_sa_auth_data"></a> [sa\_auth\_data](#output\_sa\_auth\_data) | Private key of the service account |
 | <a name="output_secret_manger_enabled"></a> [secret\_manger\_enabled](#output\_secret\_manger\_enabled) | Secret manager feature enabled |
 | <a name="output_serviceaccount_key"></a> [serviceaccount\_key](#output\_serviceaccount\_key) | Service account keys |
 | <a name="output_serviceaccount_name"></a> [serviceaccount\_name](#output\_serviceaccount\_name) | Name of the service account |
