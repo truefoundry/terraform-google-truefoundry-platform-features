@@ -58,3 +58,11 @@ output "secret_manger_enabled" {
   value       = var.feature_secrets_enabled
   description = "Secret manager feature enabled"
 }
+
+################################################################################
+# Cluster integration
+################################################################################
+output "cluster_integration_enabled" {
+  value       = var.feature_cluster_integration_enabled
+  description = "Cluster integration feature enabled"
+}
