@@ -89,3 +89,12 @@ variable "feature_cluster_integration_enabled" {
   type        = bool
   default     = true
 }
+
+################################################################################
+# Logging
+################################################################################
+variable "feature_logs_viewer_enabled" {
+  description = "Enable logs viewer permission in the platform"
+  type        = bool
+  default     = true
+}
