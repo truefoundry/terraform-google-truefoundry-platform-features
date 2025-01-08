@@ -51,6 +51,7 @@ Truefoundry Google Cloud platform features module
 | <a name="input_feature_blob_storage_enabled"></a> [feature\_blob\_storage\_enabled](#input\_feature\_blob\_storage\_enabled) | Enable blob storage feature in the platform | `bool` | `true` | no |
 | <a name="input_feature_cluster_integration_enabled"></a> [feature\_cluster\_integration\_enabled](#input\_feature\_cluster\_integration\_enabled) | Enable cluster integration feature in the platform | `bool` | `true` | no |
 | <a name="input_feature_docker_registry_enabled"></a> [feature\_docker\_registry\_enabled](#input\_feature\_docker\_registry\_enabled) | Enable docker registry feature in the platform | `bool` | `true` | no |
+| <a name="input_feature_logs_viewer_enabled"></a> [feature\_logs\_viewer\_enabled](#input\_feature\_logs\_viewer\_enabled) | Enable logs viewer permission in the platform | `bool` | `true` | no |
 | <a name="input_feature_secrets_enabled"></a> [feature\_secrets\_enabled](#input\_feature\_secrets\_enabled) | Enable secrets manager feature in the platform | `bool` | `true` | no |
 | <a name="input_project"></a> [project](#input\_project) | GCP Project | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | region | `string` | n/a | yes |
