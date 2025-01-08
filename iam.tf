@@ -67,6 +67,7 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_gcs_buck
     "resourcemanager.projects.get"
   ]
 }
+
 resource "google_project_iam_member" "truefoundry_platform_feature_gcs_role_binding" {
   count = var.feature_blob_storage_enabled ? 1 : 0
 
@@ -157,6 +158,13 @@ resource "google_project_iam_member" "truefoundry_platform_feature_token_creator
 
   project = var.project
   role    = "roles/iam.serviceAccountTokenCreator"
+  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+}
+
+// role binding logs viewer role to service account
+resource "google_project_iam_member" "truefoundry_platform_feature_logs_viewer_role_binding" {
+  project = var.project
+  role    = "roles/logging.viewer"
   member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
 }
 
