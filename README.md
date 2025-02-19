@@ -21,7 +21,7 @@ Truefoundry Google Cloud platform features module
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_blob_storage"></a> [blob\_storage](#module\_blob\_storage) | terraform-google-modules/cloud-storage/google//modules/simple_bucket | 8.0.1 |
+| <a name="module_blob_storage"></a> [blob\_storage](#module\_blob\_storage) | terraform-google-modules/cloud-storage/google//modules/simple_bucket | 9.1.0 |
 
 ## Resources
 
