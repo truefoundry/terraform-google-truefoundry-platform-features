@@ -1,7 +1,7 @@
 module "blob_storage" {
   count                    = var.feature_blob_storage_enabled ? 1 : 0
   source                   = "terraform-google-modules/cloud-storage/google//modules/simple_bucket"
-  version                  = "8.0.1"
+  version                  = "9.1.0"
   project_id               = var.project
   name                     = local.truefoundry_blob_storage_name
   location                 = var.region
