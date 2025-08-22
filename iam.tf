@@ -40,6 +40,10 @@ resource "google_project_iam_member" "truefoundry_platform_feature_secret_manage
     description = "TrueFoundry platform feature role to allows access to secrets that start with 'tfy'"
     expression  = "resource.name.startsWith('projects/${data.google_project.truefoundry_platform_feature_project.number}/secrets/tfy')"
   }
+
+  lifecycle {
+    ignore_changes = [condition[0].expression]
+  }
 }
 
 // custom role for GCS bucket
