@@ -42,7 +42,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_secret_manage
   }
 
   lifecycle {
-    ignore_changes = [ condition[0].expression ]
+    ignore_changes = [condition[0].expression]
   }
 }
 
