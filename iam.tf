@@ -184,7 +184,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_additional_ro
 
 // service account key
 resource "google_service_account_key" "truefoundry_platform_feature_service_account_key" {
-  count              = var.service_account_enabled ? 1 : 0
+  count              = var.service_account_enabled && var.service_account_key_creation_enabled ? 1 : 0
   service_account_id = google_service_account.truefoundry_platform_feature_service_account[0].id
 }
 

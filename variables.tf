@@ -39,6 +39,12 @@ variable "service_account_enabled" {
   default     = true
 }
 
+variable "service_account_key_creation_enabled" {
+  description = "Enable service account key creation"
+  type        = bool
+  default     = true
+}
+
 variable "existing_service_account_email" {
   description = "Use existing service account email"
   type        = string

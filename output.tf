@@ -46,7 +46,7 @@ output "serviceaccount_name" {
   description = "Name of the service account"
 }
 output "serviceaccount_key" {
-  value       = var.service_account_enabled ? base64decode(google_service_account_key.truefoundry_platform_feature_service_account_key[0].private_key) : ""
+  value       = var.service_account_enabled && var.service_account_key_creation_enabled ? base64decode(google_service_account_key.truefoundry_platform_feature_service_account_key[0].private_key) : ""
   sensitive   = true
   description = "Service account keys"
 }
