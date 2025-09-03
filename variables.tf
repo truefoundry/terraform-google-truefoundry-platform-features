@@ -39,6 +39,12 @@ variable "service_account_enabled" {
   default     = true
 }
 
+variable "existing_service_account_email" {
+  description = "Use existing service account email"
+  type        = string
+  default     = ""
+}
+
 variable "service_account_enable_override" {
   description = "Enable overriding name of service account. This will only be used if service_account_enabled is enabled. You need to pass service_account_override_name to pass the service account name"
   type        = bool

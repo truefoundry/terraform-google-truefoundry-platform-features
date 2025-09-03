@@ -30,11 +30,11 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_secret_m
 }
 
 resource "google_project_iam_member" "truefoundry_platform_feature_secret_manager_role_binding" {
-  count = var.service_account_enabled && var.feature_secrets_enabled ? 1 : 0
+  count = var.feature_secrets_enabled ? 1 : 0
 
   project = var.project
   role    = google_project_iam_custom_role.truefoundry_platform_feature_secret_manager_role[count.index].id
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account[0].email}"
+  member  = "serviceAccount:${local.serviceaccount_email}"
 
   condition {
     title       = "Condition to allow access to secrets starting with 'tfy'"
@@ -74,11 +74,11 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_gcs_buck
 }
 
 resource "google_project_iam_member" "truefoundry_platform_feature_gcs_role_binding" {
-  count = var.service_account_enabled && var.feature_blob_storage_enabled ? 1 : 0
+  count = var.feature_blob_storage_enabled ? 1 : 0
 
   project = var.project
   role    = google_project_iam_custom_role.truefoundry_platform_feature_gcs_bucket_role[count.index].id
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account[0].email}"
+  member  = "serviceAccount:${local.serviceaccount_email}"
 
   condition {
     title       = "Condition to allow access to truefoundry bucket"
@@ -105,11 +105,11 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_cluster_
 }
 
 resource "google_project_iam_member" "truefoundry_platform_feature_cluster_integration_role_binding" {
-  count = var.service_account_enabled && var.feature_cluster_integration_enabled ? 1 : 0
+  count = var.feature_cluster_integration_enabled ? 1 : 0
 
   project = var.project
   role    = google_project_iam_custom_role.truefoundry_platform_feature_cluster_integration_role[count.index].id
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account[0].email}"
+  member  = "serviceAccount:${local.serviceaccount_email}"
 }
 
 // artifact registry role
@@ -150,36 +150,36 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_artifact
 }
 
 resource "google_project_iam_member" "truefoundry_platform_feature_artifact_registry_role_binding" {
-  count = var.service_account_enabled && var.feature_docker_registry_enabled ? 1 : 0
+  count = var.feature_docker_registry_enabled ? 1 : 0
 
   project = var.project
   role    = google_project_iam_custom_role.truefoundry_platform_feature_artifact_registry_role[count.index].id
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account[0].email}"
+  member  = "serviceAccount:${local.serviceaccount_email}"
 }
 
 // role binding token creator role to service account
 resource "google_project_iam_member" "truefoundry_platform_feature_token_creator_role_binding" {
-  count = var.service_account_enabled && var.feature_blob_storage_enabled ? 1 : 0
+  count = var.feature_blob_storage_enabled ? 1 : 0
 
   project = var.project
   role    = "roles/iam.serviceAccountTokenCreator"
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account[0].email}"
+  member  = "serviceAccount:${local.serviceaccount_email}"
 }
 
 // role binding logs viewer role to service account
 resource "google_project_iam_member" "truefoundry_platform_feature_logs_viewer_role_binding" {
-  count   = var.service_account_enabled && var.feature_logs_viewer_enabled ? 1 : 0
+  count   = var.feature_logs_viewer_enabled ? 1 : 0
   project = var.project
   role    = "roles/logging.viewer"
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account[0].email}"
+  member  = "serviceAccount:${local.serviceaccount_email}"
 }
 
 // Adding support for passing additional IAM roles to the service account
 resource "google_project_iam_member" "truefoundry_platform_feature_additional_roles_binding" {
-  count   = var.service_account_enabled && length(var.service_account_additional_roles) > 0 ? 1 : 0
+  count   = length(var.service_account_additional_roles) > 0 ? 1 : 0
   project = var.project
   role    = var.service_account_additional_roles[count.index]
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account[0].email}"
+  member  = "serviceAccount:${local.serviceaccount_email}"
 }
 
 // service account key
