@@ -9,7 +9,7 @@ resource "google_service_account" "truefoundry_platform_feature_service_account"
 
 // custom role for secret manager
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_secret_manager_role" {
-  count       = var.service_account_enabled && var.feature_secrets_enabled ? 1 : 0
+  count       = var.feature_secrets_enabled ? 1 : 0
   project     = var.project
   role_id     = trimsuffix(substr(replace("${local.truefoundry_platform_resources}_bucket_secret_manager_role", "-", "_"), 0, 64), "_")
   title       = trimsuffix(substr("truefoundry/${var.cluster_name}/platform-features/${local.truefoundry_platform_resources}_bucket_secret_manager_role", 0, 100), "_")
@@ -49,7 +49,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_secret_manage
 
 // custom role for GCS bucket
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_gcs_bucket_role" {
-  count       = var.service_account_enabled && var.feature_blob_storage_enabled ? 1 : 0
+  count       = var.feature_blob_storage_enabled ? 1 : 0
   project     = var.project
   role_id     = trimsuffix(substr(replace("${local.truefoundry_platform_resources}_bucket_gcs_role", "-", "_"), 0, 64), "_")
   title       = trimsuffix(substr("truefoundry/${var.cluster_name}/platform-features/${local.truefoundry_platform_resources}_bucket-gcs-role", 0, 100), "_")
@@ -89,7 +89,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_gcs_role_bind
 
 // cluster integration role
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_cluster_integration_role" {
-  count       = var.service_account_enabled && var.feature_cluster_integration_enabled ? 1 : 0
+  count       = var.feature_cluster_integration_enabled ? 1 : 0
   project     = var.project
   role_id     = trimsuffix(substr(replace("${local.truefoundry_platform_resources}_cluster_integration_role", "-", "_"), 0, 64), "_")
   title       = trimsuffix(substr("truefoundry/${var.cluster_name}/platform-features/${local.truefoundry_platform_resources}_cluster_integration_role", 0, 100), "_")
@@ -114,7 +114,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_cluster_integ
 
 // artifact registry role
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_artifact_registry_role" {
-  count       = var.service_account_enabled && var.feature_docker_registry_enabled ? 1 : 0
+  count       = var.feature_docker_registry_enabled ? 1 : 0
   project     = var.project
   role_id     = trimsuffix(substr(replace("${local.truefoundry_platform_resources}_artifact_registry_role", "-", "_"), 0, 64), "_")
   title       = trimsuffix(substr("truefoundry/${var.cluster_name}/platform-features/${local.truefoundry_platform_resources}_artifact_registry_role", 0, 100), "_")
