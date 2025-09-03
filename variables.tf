@@ -30,6 +30,34 @@ variable "project" {
 }
 
 ################################################################################
+# Service Account
+################################################################################
+
+variable "service_account_enabled" {
+  description = "Enable service account feature in the platform"
+  type        = bool
+  default     = true
+}
+
+variable "service_account_enable_override" {
+  description = "Enable overriding name of service account. This will only be used if service_account_enabled is enabled. You need to pass service_account_override_name to pass the service account name"
+  type        = bool
+  default     = false
+}
+
+variable "service_account_override_name" {
+  description = "Service account name. Only used if service_account_enable_override is enabled"
+  type        = string
+  default     = ""
+}
+
+variable "service_account_additional_roles" {
+  description = "List of additional IAM roles to be added to the service account"
+  type        = list(string)
+  default     = []
+}
+
+################################################################################
 # Blob Storage
 ################################################################################
 

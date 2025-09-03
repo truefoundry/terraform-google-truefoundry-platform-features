@@ -1,6 +1,7 @@
 // service account for truefoundry platform feature
 resource "google_service_account" "truefoundry_platform_feature_service_account" {
-  account_id   = local.serviceaccount_name
+  count        = var.service_account_enabled ? 1 : 0
+  account_id   = var.service_account_enable_override ? var.service_account_override_name : local.serviceaccount_name
   project      = var.project
   display_name = "Terraform-managed truefoundry platform service account"
   description  = "Truefoundry platform user with access to artifact registry, blob storage and secrets manager"
@@ -8,7 +9,7 @@ resource "google_service_account" "truefoundry_platform_feature_service_account"
 
 // custom role for secret manager
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_secret_manager_role" {
-  count       = var.feature_secrets_enabled ? 1 : 0
+  count       = var.service_account_enabled && var.feature_secrets_enabled ? 1 : 0
   project     = var.project
   role_id     = trimsuffix(substr(replace("${local.truefoundry_platform_resources}_bucket_secret_manager_role", "-", "_"), 0, 64), "_")
   title       = trimsuffix(substr("truefoundry/${var.cluster_name}/platform-features/${local.truefoundry_platform_resources}_bucket_secret_manager_role", 0, 100), "_")
@@ -29,11 +30,11 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_secret_m
 }
 
 resource "google_project_iam_member" "truefoundry_platform_feature_secret_manager_role_binding" {
-  count = var.feature_secrets_enabled ? 1 : 0
+  count = var.service_account_enabled && var.feature_secrets_enabled ? 1 : 0
 
   project = var.project
   role    = google_project_iam_custom_role.truefoundry_platform_feature_secret_manager_role[count.index].id
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account[0].email}"
 
   condition {
     title       = "Condition to allow access to secrets starting with 'tfy'"
@@ -48,7 +49,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_secret_manage
 
 // custom role for GCS bucket
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_gcs_bucket_role" {
-  count       = var.feature_blob_storage_enabled ? 1 : 0
+  count       = var.service_account_enabled && var.feature_blob_storage_enabled ? 1 : 0
   project     = var.project
   role_id     = trimsuffix(substr(replace("${local.truefoundry_platform_resources}_bucket_gcs_role", "-", "_"), 0, 64), "_")
   title       = trimsuffix(substr("truefoundry/${var.cluster_name}/platform-features/${local.truefoundry_platform_resources}_bucket-gcs-role", 0, 100), "_")
@@ -73,11 +74,11 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_gcs_buck
 }
 
 resource "google_project_iam_member" "truefoundry_platform_feature_gcs_role_binding" {
-  count = var.feature_blob_storage_enabled ? 1 : 0
+  count = var.service_account_enabled && var.feature_blob_storage_enabled ? 1 : 0
 
   project = var.project
   role    = google_project_iam_custom_role.truefoundry_platform_feature_gcs_bucket_role[count.index].id
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account[0].email}"
 
   condition {
     title       = "Condition to allow access to truefoundry bucket"
@@ -88,7 +89,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_gcs_role_bind
 
 // cluster integration role
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_cluster_integration_role" {
-  count       = var.feature_cluster_integration_enabled ? 1 : 0
+  count       = var.service_account_enabled && var.feature_cluster_integration_enabled ? 1 : 0
   project     = var.project
   role_id     = trimsuffix(substr(replace("${local.truefoundry_platform_resources}_cluster_integration_role", "-", "_"), 0, 64), "_")
   title       = trimsuffix(substr("truefoundry/${var.cluster_name}/platform-features/${local.truefoundry_platform_resources}_cluster_integration_role", 0, 100), "_")
@@ -104,16 +105,16 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_cluster_
 }
 
 resource "google_project_iam_member" "truefoundry_platform_feature_cluster_integration_role_binding" {
-  count = var.feature_cluster_integration_enabled ? 1 : 0
+  count = var.service_account_enabled && var.feature_cluster_integration_enabled ? 1 : 0
 
   project = var.project
   role    = google_project_iam_custom_role.truefoundry_platform_feature_cluster_integration_role[count.index].id
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account[0].email}"
 }
 
 // artifact registry role
 resource "google_project_iam_custom_role" "truefoundry_platform_feature_artifact_registry_role" {
-  count       = var.feature_docker_registry_enabled ? 1 : 0
+  count       = var.service_account_enabled && var.feature_docker_registry_enabled ? 1 : 0
   project     = var.project
   role_id     = trimsuffix(substr(replace("${local.truefoundry_platform_resources}_artifact_registry_role", "-", "_"), 0, 64), "_")
   title       = trimsuffix(substr("truefoundry/${var.cluster_name}/platform-features/${local.truefoundry_platform_resources}_artifact_registry_role", 0, 100), "_")
@@ -149,31 +150,46 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_artifact
 }
 
 resource "google_project_iam_member" "truefoundry_platform_feature_artifact_registry_role_binding" {
-  count = var.feature_docker_registry_enabled ? 1 : 0
+  count = var.service_account_enabled && var.feature_docker_registry_enabled ? 1 : 0
 
   project = var.project
   role    = google_project_iam_custom_role.truefoundry_platform_feature_artifact_registry_role[count.index].id
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account[0].email}"
 }
 
 // role binding token creator role to service account
 resource "google_project_iam_member" "truefoundry_platform_feature_token_creator_role_binding" {
-  count = var.feature_blob_storage_enabled ? 1 : 0
+  count = var.service_account_enabled && var.feature_blob_storage_enabled ? 1 : 0
 
   project = var.project
   role    = "roles/iam.serviceAccountTokenCreator"
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account[0].email}"
 }
 
 // role binding logs viewer role to service account
 resource "google_project_iam_member" "truefoundry_platform_feature_logs_viewer_role_binding" {
-  count   = var.feature_logs_viewer_enabled ? 1 : 0
+  count   = var.service_account_enabled && var.feature_logs_viewer_enabled ? 1 : 0
   project = var.project
   role    = "roles/logging.viewer"
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account[0].email}"
+}
+
+// Adding support for passing additional IAM roles to the service account
+resource "google_project_iam_member" "truefoundry_platform_feature_additional_roles_binding" {
+  count   = var.service_account_enabled && length(var.service_account_additional_roles) > 0 ? 1 : 0
+  project = var.project
+  role    = var.service_account_additional_roles[count.index]
+  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account[0].email}"
 }
 
 // service account key
 resource "google_service_account_key" "truefoundry_platform_feature_service_account_key" {
-  service_account_id = google_service_account.truefoundry_platform_feature_service_account.id
+  count              = var.service_account_enabled ? 1 : 0
+  service_account_id = google_service_account.truefoundry_platform_feature_service_account[0].id
+}
+
+// moved block
+moved {
+  from = google_service_account.truefoundry_platform_feature_service_account
+  to   = google_service_account.truefoundry_platform_feature_service_account[0]
 }
