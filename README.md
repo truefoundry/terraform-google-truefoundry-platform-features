@@ -63,6 +63,7 @@ Truefoundry Google Cloud platform features module
 | <a name="input_service_account_additional_roles"></a> [service\_account\_additional\_roles](#input\_service\_account\_additional\_roles) | List of additional IAM roles to be added to the service account | `list(string)` | `[]` | no |
 | <a name="input_service_account_enable_override"></a> [service\_account\_enable\_override](#input\_service\_account\_enable\_override) | Enable overriding name of service account. This will only be used if service\_account\_enabled is enabled. You need to pass service\_account\_override\_name to pass the service account name | `bool` | `false` | no |
 | <a name="input_service_account_enabled"></a> [service\_account\_enabled](#input\_service\_account\_enabled) | Enable service account feature in the platform | `bool` | `true` | no |
+| <a name="input_service_account_key_creation_enabled"></a> [service\_account\_key\_creation\_enabled](#input\_service\_account\_key\_creation\_enabled) | Enable service account key creation | `bool` | `true` | no |
 | <a name="input_service_account_override_name"></a> [service\_account\_override\_name](#input\_service\_account\_override\_name) | Service account name. Only used if service\_account\_enable\_override is enabled | `string` | `""` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to add to all resources | `map(string)` | `{}` | no |
 
