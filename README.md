@@ -31,6 +31,7 @@ Truefoundry Google Cloud platform features module
 | [google_project_iam_custom_role.truefoundry_platform_feature_cluster_integration_role](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_custom_role) | resource |
 | [google_project_iam_custom_role.truefoundry_platform_feature_gcs_bucket_role](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_custom_role) | resource |
 | [google_project_iam_custom_role.truefoundry_platform_feature_secret_manager_role](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_custom_role) | resource |
+| [google_project_iam_member.truefoundry_platform_feature_additional_roles_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.truefoundry_platform_feature_artifact_registry_role_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.truefoundry_platform_feature_cluster_integration_role_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.truefoundry_platform_feature_gcs_role_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
@@ -58,6 +59,10 @@ Truefoundry Google Cloud platform features module
 | <a name="input_feature_secrets_enabled"></a> [feature\_secrets\_enabled](#input\_feature\_secrets\_enabled) | Enable secrets manager feature in the platform | `bool` | `true` | no |
 | <a name="input_project"></a> [project](#input\_project) | GCP Project | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | region | `string` | n/a | yes |
+| <a name="input_service_account_additional_roles"></a> [service\_account\_additional\_roles](#input\_service\_account\_additional\_roles) | List of additional IAM roles to be added to the service account | `list(string)` | `[]` | no |
+| <a name="input_service_account_enable_override"></a> [service\_account\_enable\_override](#input\_service\_account\_enable\_override) | Enable overriding name of service account. This will only be used if service\_account\_enabled is enabled. You need to pass service\_account\_override\_name to pass the service account name | `bool` | `false` | no |
+| <a name="input_service_account_enabled"></a> [service\_account\_enabled](#input\_service\_account\_enabled) | Enable service account feature in the platform | `bool` | `true` | no |
+| <a name="input_service_account_override_name"></a> [service\_account\_override\_name](#input\_service\_account\_override\_name) | Service account name. Only used if service\_account\_enable\_override is enabled | `string` | `""` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to add to all resources | `map(string)` | `{}` | no |
 
 ## Outputs
