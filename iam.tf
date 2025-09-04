@@ -1,6 +1,7 @@
 // service account for truefoundry platform feature
 resource "google_service_account" "truefoundry_platform_feature_service_account" {
-  account_id   = local.serviceaccount_name
+  count        = var.service_account_enabled ? 1 : 0
+  account_id   = var.service_account_enable_override ? var.service_account_override_name : local.serviceaccount_name
   project      = var.project
   display_name = "Terraform-managed truefoundry platform service account"
   description  = "Truefoundry platform user with access to artifact registry, blob storage and secrets manager"
@@ -33,7 +34,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_secret_manage
 
   project = var.project
   role    = google_project_iam_custom_role.truefoundry_platform_feature_secret_manager_role[count.index].id
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+  member  = "serviceAccount:${local.serviceaccount_email}"
 
   condition {
     title       = "Condition to allow access to secrets starting with 'tfy'"
@@ -77,7 +78,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_gcs_role_bind
 
   project = var.project
   role    = google_project_iam_custom_role.truefoundry_platform_feature_gcs_bucket_role[count.index].id
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+  member  = "serviceAccount:${local.serviceaccount_email}"
 
   condition {
     title       = "Condition to allow access to truefoundry bucket"
@@ -108,7 +109,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_cluster_integ
 
   project = var.project
   role    = google_project_iam_custom_role.truefoundry_platform_feature_cluster_integration_role[count.index].id
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+  member  = "serviceAccount:${local.serviceaccount_email}"
 }
 
 // artifact registry role
@@ -153,7 +154,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_artifact_regi
 
   project = var.project
   role    = google_project_iam_custom_role.truefoundry_platform_feature_artifact_registry_role[count.index].id
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+  member  = "serviceAccount:${local.serviceaccount_email}"
 }
 
 // role binding token creator role to service account
@@ -162,7 +163,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_token_creator
 
   project = var.project
   role    = "roles/iam.serviceAccountTokenCreator"
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+  member  = "serviceAccount:${local.serviceaccount_email}"
 }
 
 // role binding logs viewer role to service account
@@ -170,10 +171,25 @@ resource "google_project_iam_member" "truefoundry_platform_feature_logs_viewer_r
   count   = var.feature_logs_viewer_enabled ? 1 : 0
   project = var.project
   role    = "roles/logging.viewer"
-  member  = "serviceAccount:${google_service_account.truefoundry_platform_feature_service_account.email}"
+  member  = "serviceAccount:${local.serviceaccount_email}"
+}
+
+// Adding support for passing additional IAM roles to the service account
+resource "google_project_iam_member" "truefoundry_platform_feature_additional_roles_binding" {
+  count   = length(var.service_account_additional_roles) > 0 ? 1 : 0
+  project = var.project
+  role    = var.service_account_additional_roles[count.index]
+  member  = "serviceAccount:${local.serviceaccount_email}"
 }
 
 // service account key
 resource "google_service_account_key" "truefoundry_platform_feature_service_account_key" {
-  service_account_id = google_service_account.truefoundry_platform_feature_service_account.id
+  count              = var.service_account_enabled && var.service_account_key_creation_enabled ? 1 : 0
+  service_account_id = google_service_account.truefoundry_platform_feature_service_account[0].id
+}
+
+// moved block
+moved {
+  from = google_service_account.truefoundry_platform_feature_service_account
+  to   = google_service_account.truefoundry_platform_feature_service_account[0]
 }
