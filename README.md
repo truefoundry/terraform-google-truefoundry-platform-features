@@ -39,6 +39,7 @@ Truefoundry Google Cloud platform features module
 | [google_project_iam_member.truefoundry_platform_feature_secret_manager_role_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.truefoundry_platform_feature_token_creator_role_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_service_account.truefoundry_platform_feature_service_account](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
+| [google_service_account_iam_binding.truefoundry_platform_feature_flyte_propeller_service_account_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account_iam_binding) | resource |
 | [google_service_account_key.truefoundry_platform_feature_service_account_key](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account_key) | resource |
 | [random_string.random_id](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [google_project.truefoundry_platform_feature_project](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/project) | data source |
@@ -58,6 +59,8 @@ Truefoundry Google Cloud platform features module
 | <a name="input_feature_docker_registry_enabled"></a> [feature\_docker\_registry\_enabled](#input\_feature\_docker\_registry\_enabled) | Enable docker registry feature in the platform | `bool` | `true` | no |
 | <a name="input_feature_logs_viewer_enabled"></a> [feature\_logs\_viewer\_enabled](#input\_feature\_logs\_viewer\_enabled) | Enable logs viewer permission in the platform | `bool` | `true` | no |
 | <a name="input_feature_secrets_enabled"></a> [feature\_secrets\_enabled](#input\_feature\_secrets\_enabled) | Enable secrets manager feature in the platform | `bool` | `true` | no |
+| <a name="input_flyte_propeller_serviceaccount_name"></a> [flyte\_propeller\_serviceaccount\_name](#input\_flyte\_propeller\_serviceaccount\_name) | Name for the Flyte Propeller service account | `string` | `"flytepropeller"` | no |
+| <a name="input_flyte_propeller_serviceaccount_namespace"></a> [flyte\_propeller\_serviceaccount\_namespace](#input\_flyte\_propeller\_serviceaccount\_namespace) | Namespace for the Flyte Propeller service account | `string` | `"tfy-workflow-propeller"` | no |
 | <a name="input_project"></a> [project](#input\_project) | GCP Project | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | region | `string` | n/a | yes |
 | <a name="input_service_account_additional_roles"></a> [service\_account\_additional\_roles](#input\_service\_account\_additional\_roles) | List of additional IAM roles to be added to the service account | `list(string)` | `[]` | no |
