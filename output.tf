@@ -2,7 +2,7 @@
 # IAM serviceaccount
 ################################################################################
 output "sa_auth_data" {
-  value       = var.service_account_enabled ? base64decode(google_service_account_key.truefoundry_platform_feature_service_account_key[0].private_key) : ""
+  value       = var.service_account_enabled && var.service_account_key_creation_enabled ? base64decode(google_service_account_key.truefoundry_platform_feature_service_account_key[0].private_key) : ""
   sensitive   = true
   description = "Private key of the service account"
 }
@@ -41,6 +41,16 @@ output "artifact_registry_url" {
 ################################################################################
 # IAM serviceaccount
 ################################################################################
+output "serviceaccount_enabled" {
+  value       = var.service_account_enabled
+  description = "Service account feature enabled"
+}
+
+output "serviceaccount_key_creation_enabled" {
+  value       = var.service_account_key_creation_enabled
+  description = "Service account key creation feature enabled"
+}
+
 output "serviceaccount_name" {
   value       = var.service_account_enabled && var.service_account_enable_override ? var.service_account_override_name : local.serviceaccount_name
   description = "Name of the service account"
