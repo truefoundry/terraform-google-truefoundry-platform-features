@@ -2,7 +2,7 @@
 # IAM serviceaccount
 ################################################################################
 output "sa_auth_data" {
-  value       = var.service_account_enabled ? base64decode(google_service_account_key.truefoundry_platform_feature_service_account_key[0].private_key) : ""
+  value       = var.service_account_enabled && var.service_account_key_creation_enabled ? base64decode(google_service_account_key.truefoundry_platform_feature_service_account_key[0].private_key) : ""
   sensitive   = true
   description = "Private key of the service account"
 }
@@ -65,4 +65,12 @@ output "secret_manger_enabled" {
 output "cluster_integration_enabled" {
   value       = var.feature_cluster_integration_enabled
   description = "Cluster integration feature enabled"
+}
+
+################################################################################
+# Provider integration
+################################################################################
+output "provider_integration_enabled" {
+  value       = var.service_account_enabled && var.service_account_key_creation_enabled
+  description = "Provider integration feature enabled (requires both service account and service account key creation to be enabled)"
 }
