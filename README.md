@@ -80,6 +80,7 @@ Truefoundry Google Cloud platform features module
 | <a name="output_bucket_url"></a> [bucket\_url](#output\_bucket\_url) | URL of the bucket |
 | <a name="output_cluster_integration_enabled"></a> [cluster\_integration\_enabled](#output\_cluster\_integration\_enabled) | Cluster integration feature enabled |
 | <a name="output_docker_registry_enabled"></a> [docker\_registry\_enabled](#output\_docker\_registry\_enabled) | Docker registry feature enabled |
+| <a name="output_provider_integration_enabled"></a> [provider\_integration\_enabled](#output\_provider\_integration\_enabled) | Provider integration feature enabled (requires both service account and service account key creation to be enabled) |
 | <a name="output_sa_auth_data"></a> [sa\_auth\_data](#output\_sa\_auth\_data) | Private key of the service account |
 | <a name="output_secret_manger_enabled"></a> [secret\_manger\_enabled](#output\_secret\_manger\_enabled) | Secret manager feature enabled |
 | <a name="output_serviceaccount_key"></a> [serviceaccount\_key](#output\_serviceaccount\_key) | Service account keys |
