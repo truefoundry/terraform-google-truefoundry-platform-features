@@ -97,9 +97,13 @@ resource "google_project_iam_custom_role" "truefoundry_platform_feature_cluster_
   permissions = [
     "container.clusters.get",
     "container.clusters.list",
+    "container.clusters.update",
+    "container.nodes.delete",
+    "container.nodes.list",
     "container.nodes.get",
     "container.nodes.getStatus",
     "container.nodes.list",
+    "container.operations.get",
     "resourcemanager.projects.get",
   ]
 }
