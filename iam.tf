@@ -186,14 +186,14 @@ resource "google_project_iam_member" "truefoundry_platform_feature_additional_ro
   member  = "serviceAccount:${local.serviceaccount_email}"
 }
 
-resource "google_service_account_iam_binding" "truefoundry_platform_feature_flyte_propeller_service_account_binding" {
+resource "google_service_account_iam_binding" "truefoundry_platform_feature_service_account_workload_identity_binding" {
   count              = var.service_account_enabled ? 1 : 0
   service_account_id = google_service_account.truefoundry_platform_feature_service_account[0].id
   role               = "roles/iam.workloadIdentityUser"
 
-  members = [
-    "serviceAccount:${var.project}.svc.id.goog[${var.flyte_propeller_serviceaccount_namespace}/${var.flyte_propeller_serviceaccount_name}]",
-  ]
+  members = compact([
+    "serviceAccount:${var.project}.svc.id.goog[${var.flyte_propeller_serviceaccount_namespace}/${var.flyte_propeller_serviceaccount_name}]", var.service_account_keyless_enabled ? local.service_account_iam_binding_principal : ""
+  ])
 }
 
 // service account key
@@ -202,8 +202,47 @@ resource "google_service_account_key" "truefoundry_platform_feature_service_acco
   service_account_id = google_service_account.truefoundry_platform_feature_service_account[0].id
 }
 
+################################################################################
+# Workload Identity Federation (keyless authentication)
+################################################################################
+
+// workload identity pool
+resource "google_iam_workload_identity_pool" "truefoundry_platform_feature_pool" {
+  count                     = var.service_account_enabled && var.service_account_keyless_enabled ? 1 : 0
+  project                   = var.project
+  workload_identity_pool_id = substr("${var.cluster_name}-tfy-pool", 0, 32)
+  display_name              = "${var.cluster_name}-tfy-pool"
+  description               = "Workload identity pool for TrueFoundry platform on ${var.cluster_name}"
+}
+
+// OIDC provider for the workload identity pool
+resource "google_iam_workload_identity_pool_provider" "truefoundry_platform_feature_oidc_provider" {
+  count                              = var.service_account_enabled && var.service_account_keyless_enabled ? 1 : 0
+  project                            = var.project
+  workload_identity_pool_id          = google_iam_workload_identity_pool.truefoundry_platform_feature_pool[0].workload_identity_pool_id
+  workload_identity_pool_provider_id = substr("${var.cluster_name}-tfy-oidc", 0, 32)
+  display_name                       = "${var.cluster_name}-tfy-oidc"
+
+  oidc {
+    issuer_uri = var.service_account_keyless_oidc_issuer_url
+  }
+
+  attribute_mapping = {
+    "google.subject"                 = "assertion.sub"
+    "attribute.namespace"            = "assertion['kubernetes.io']['namespace']"
+    "attribute.service_account_name" = "assertion['kubernetes.io']['serviceaccount']['name']"
+  }
+
+  attribute_condition = var.service_account_keyless_k8s_serviceaccount_name == "*" ? "" : "google.subject == \"system:serviceaccount:${var.service_account_keyless_namespace}:${var.service_account_keyless_k8s_serviceaccount_name}\""
+}
+
 // moved block
 moved {
   from = google_service_account.truefoundry_platform_feature_service_account
   to   = google_service_account.truefoundry_platform_feature_service_account[0]
+}
+
+moved {
+  from = google_service_account_iam_binding.truefoundry_platform_feature_flyte_propeller_service_account_binding[0]
+  to   = google_service_account_iam_binding.truefoundry_platform_feature_service_account_workload_identity_binding[0]
 }
