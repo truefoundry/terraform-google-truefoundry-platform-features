@@ -69,6 +69,30 @@ variable "service_account_additional_roles" {
   default     = []
 }
 
+variable "service_account_keyless_enabled" {
+  description = "Enable keyless authentication using GCP Workload Identity Federation with OIDC. When enabled, an ADC credential config JSON is output via serviceaccount_adc_config. Can be enabled alongside service account key creation during migration"
+  type        = bool
+  default     = false
+}
+
+variable "service_account_keyless_oidc_issuer_url" {
+  description = "OIDC issuer URL of the Kubernetes cluster (e.g. https://oidc.eks.us-east-1.amazonaws.com/id/XXXX). Required when service_account_keyless_enabled is true"
+  type        = string
+  default     = ""
+}
+
+variable "service_account_keyless_namespace" {
+  description = "Kubernetes namespace of the service account that will impersonate the GCP service account. Required when service_account_keyless_enabled is true"
+  type        = string
+  default     = "truefoundry"
+}
+
+variable "service_account_keyless_k8s_serviceaccount_name" {
+  description = "Kubernetes service account name that will impersonate the GCP service account. Required when service_account_keyless_enabled is true"
+  type        = string
+  default     = "truefoundry"
+}
+
 ################################################################################
 ## Flyte Propeller
 ################################################################################

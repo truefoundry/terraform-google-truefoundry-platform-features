@@ -61,6 +61,12 @@ output "serviceaccount_key" {
   description = "Service account keys"
 }
 
+output "serviceaccount_adc_config" {
+  value       = local.serviceaccount_adc_config
+  sensitive   = true
+  description = "Application Default Credentials config JSON for keyless authentication via Workload Identity Federation"
+}
+
 ################################################################################
 # Secret manager
 ################################################################################

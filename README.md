@@ -27,6 +27,8 @@ Truefoundry Google Cloud platform features module
 
 | Name | Type |
 |------|------|
+| [google_iam_workload_identity_pool.truefoundry_platform_feature_pool](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/iam_workload_identity_pool) | resource |
+| [google_iam_workload_identity_pool_provider.truefoundry_platform_feature_oidc_provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/iam_workload_identity_pool_provider) | resource |
 | [google_project_iam_custom_role.truefoundry_platform_feature_artifact_registry_role](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_custom_role) | resource |
 | [google_project_iam_custom_role.truefoundry_platform_feature_cluster_integration_role](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_custom_role) | resource |
 | [google_project_iam_custom_role.truefoundry_platform_feature_gcs_bucket_role](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_custom_role) | resource |
@@ -39,7 +41,7 @@ Truefoundry Google Cloud platform features module
 | [google_project_iam_member.truefoundry_platform_feature_secret_manager_role_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.truefoundry_platform_feature_token_creator_role_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_service_account.truefoundry_platform_feature_service_account](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
-| [google_service_account_iam_binding.truefoundry_platform_feature_flyte_propeller_service_account_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account_iam_binding) | resource |
+| [google_service_account_iam_binding.truefoundry_platform_feature_service_account_workload_identity_binding](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account_iam_binding) | resource |
 | [google_service_account_key.truefoundry_platform_feature_service_account_key](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account_key) | resource |
 | [random_string.random_id](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [google_project.truefoundry_platform_feature_project](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/project) | data source |
@@ -67,6 +69,10 @@ Truefoundry Google Cloud platform features module
 | <a name="input_service_account_enable_override"></a> [service\_account\_enable\_override](#input\_service\_account\_enable\_override) | Enable overriding name of service account. This will only be used if service\_account\_enabled is enabled. You need to pass service\_account\_override\_name to pass the service account name | `bool` | `false` | no |
 | <a name="input_service_account_enabled"></a> [service\_account\_enabled](#input\_service\_account\_enabled) | Enable service account feature in the platform | `bool` | `true` | no |
 | <a name="input_service_account_key_creation_enabled"></a> [service\_account\_key\_creation\_enabled](#input\_service\_account\_key\_creation\_enabled) | Enable service account key creation | `bool` | `true` | no |
+| <a name="input_service_account_keyless_enabled"></a> [service\_account\_keyless\_enabled](#input\_service\_account\_keyless\_enabled) | Enable keyless authentication using GCP Workload Identity Federation with OIDC. When enabled, an ADC credential config JSON is output via serviceaccount\_adc\_config. Can be enabled alongside service account key creation during migration | `bool` | `false` | no |
+| <a name="input_service_account_keyless_k8s_serviceaccount_name"></a> [service\_account\_keyless\_k8s\_serviceaccount\_name](#input\_service\_account\_keyless\_k8s\_serviceaccount\_name) | Kubernetes service account name that will impersonate the GCP service account. Required when service\_account\_keyless\_enabled is true | `string` | `"truefoundry"` | no |
+| <a name="input_service_account_keyless_namespace"></a> [service\_account\_keyless\_namespace](#input\_service\_account\_keyless\_namespace) | Kubernetes namespace of the service account that will impersonate the GCP service account. Required when service\_account\_keyless\_enabled is true | `string` | `"truefoundry"` | no |
+| <a name="input_service_account_keyless_oidc_issuer_url"></a> [service\_account\_keyless\_oidc\_issuer\_url](#input\_service\_account\_keyless\_oidc\_issuer\_url) | OIDC issuer URL of the Kubernetes cluster (e.g. https://oidc.eks.us-east-1.amazonaws.com/id/XXXX). Required when service\_account\_keyless\_enabled is true | `string` | `""` | no |
 | <a name="input_service_account_override_name"></a> [service\_account\_override\_name](#input\_service\_account\_override\_name) | Service account name. Only used if service\_account\_enable\_override is enabled | `string` | `""` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to add to all resources | `map(string)` | `{}` | no |
 
@@ -82,6 +88,7 @@ Truefoundry Google Cloud platform features module
 | <a name="output_docker_registry_enabled"></a> [docker\_registry\_enabled](#output\_docker\_registry\_enabled) | Docker registry feature enabled |
 | <a name="output_sa_auth_data"></a> [sa\_auth\_data](#output\_sa\_auth\_data) | Private key of the service account |
 | <a name="output_secret_manger_enabled"></a> [secret\_manger\_enabled](#output\_secret\_manger\_enabled) | Secret manager feature enabled |
+| <a name="output_serviceaccount_adc_config"></a> [serviceaccount\_adc\_config](#output\_serviceaccount\_adc\_config) | Application Default Credentials config JSON for keyless authentication via Workload Identity Federation |
 | <a name="output_serviceaccount_enabled"></a> [serviceaccount\_enabled](#output\_serviceaccount\_enabled) | Service account feature enabled |
 | <a name="output_serviceaccount_key"></a> [serviceaccount\_key](#output\_serviceaccount\_key) | Service account keys |
 | <a name="output_serviceaccount_key_creation_enabled"></a> [serviceaccount\_key\_creation\_enabled](#output\_serviceaccount\_key\_creation\_enabled) | Service account key creation feature enabled |
