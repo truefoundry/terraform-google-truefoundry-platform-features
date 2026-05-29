@@ -233,7 +233,7 @@ resource "google_iam_workload_identity_pool_provider" "truefoundry_platform_feat
     "attribute.service_account_name" = "assertion['kubernetes.io']['serviceaccount']['name']"
   }
 
-  attribute_condition = var.service_account_keyless_k8s_serviceaccount_name == "*" ? "" : "google.subject == \"system:serviceaccount:${var.service_account_keyless_namespace}:${var.service_account_keyless_k8s_serviceaccount_name}\""
+  attribute_condition = var.service_account_keyless_k8s_serviceaccount_name == "*" ? null : "google.subject == \"system:serviceaccount:${var.service_account_keyless_namespace}:${var.service_account_keyless_k8s_serviceaccount_name}\""
 }
 
 // moved block
