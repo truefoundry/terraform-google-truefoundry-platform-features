@@ -25,5 +25,5 @@ locals {
     }
     service_account_impersonation_url = "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/${local.serviceaccount_email}:generateAccessToken"
   }) : ""
-  service_account_iam_binding_principal = var.service_account_keyless_k8s_serviceaccount_name == "*" ? "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.truefoundry_platform_feature_pool[0].name}/attribute.namespace/${var.service_account_keyless_namespace}" : "principal://iam.googleapis.com/${google_iam_workload_identity_pool.truefoundry_platform_feature_pool[0].name}/subject/system:serviceaccount:${var.service_account_keyless_namespace}:${var.service_account_keyless_k8s_serviceaccount_name}"
+  service_account_iam_binding_principal = var.service_account_keyless_k8s_serviceaccount_name == "*" ? "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.truefoundry_platform_feature_pool[0].name}/attribute.namespace/${var.service_account_keyless_k8s_serviceaccount_namespace}" : "principal://iam.googleapis.com/${google_iam_workload_identity_pool.truefoundry_platform_feature_pool[0].name}/subject/system:serviceaccount:${var.service_account_keyless_k8s_serviceaccount_namespace}:${var.service_account_keyless_k8s_serviceaccount_name}"
 }
