@@ -81,7 +81,7 @@ variable "service_account_keyless_oidc_issuer_url" {
   default     = ""
 }
 
-variable "service_account_keyless_namespace" {
+variable "service_account_keyless_k8s_serviceaccount_namespace" {
   description = "Kubernetes namespace of the service account that will impersonate the GCP service account. Required when service_account_keyless_enabled is true"
   type        = string
   default     = "truefoundry"
