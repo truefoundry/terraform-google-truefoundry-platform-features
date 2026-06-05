@@ -198,7 +198,7 @@ resource "google_service_account_iam_binding" "truefoundry_platform_feature_serv
 // service account key
 resource "google_service_account_key" "truefoundry_platform_feature_service_account_key" {
   count              = var.service_account_key_creation_enabled ? 1 : 0
-  service_account_id = google_service_account.truefoundry_platform_feature_service_account[0].id
+  service_account_id = var.service_account_enabled ? google_service_account.truefoundry_platform_feature_service_account[0].id : data.google_service_account.truefoundry_platform_feature_service_account[0].id
 }
 
 ################################################################################
