@@ -45,6 +45,7 @@ Truefoundry Google Cloud platform features module
 | [google_service_account_key.truefoundry_platform_feature_service_account_key](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account_key) | resource |
 | [random_string.random_id](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [google_project.truefoundry_platform_feature_project](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/project) | data source |
+| [google_service_account.truefoundry_platform_feature_service_account](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/service_account) | data source |
 
 ## Inputs
 
