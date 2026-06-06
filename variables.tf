@@ -46,7 +46,7 @@ variable "service_account_key_creation_enabled" {
 }
 
 variable "existing_service_account_email" {
-  description = "Use existing service account email. If service_account_enabled is false, this variable is required."
+  description = "Use existing service account email. If service_account_enabled is false, this variable is required. IMPORTANT: This will override the IAM bindings for the serviceaccount passed in existing_service_account_email. To avoid this, please set service_account_iam_binding_enabled to false."
   type        = string
   default     = ""
 
@@ -54,6 +54,12 @@ variable "existing_service_account_email" {
     condition     = var.service_account_enabled || var.existing_service_account_email != ""
     error_message = "existing_service_account_email is empty when service_account_enabled is false. Please pass the existing service account email."
   }
+}
+
+variable "service_account_iam_binding_enabled" {
+  description = "Enable service account IAM binding. If service_account_enabled is false, this variable will override the IAM bindings for the serviceaccount passed in existing_service_account_email."
+  type        = bool
+  default     = true
 }
 
 variable "service_account_enable_override" {

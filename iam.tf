@@ -187,6 +187,7 @@ resource "google_project_iam_member" "truefoundry_platform_feature_additional_ro
 }
 
 resource "google_service_account_iam_binding" "truefoundry_platform_feature_service_account_workload_identity_binding" {
+  count              = var.service_account_iam_binding_enabled ? 1 : 0
   service_account_id = var.service_account_enabled ? google_service_account.truefoundry_platform_feature_service_account[0].id : data.google_service_account.truefoundry_platform_feature_service_account[0].id
   role               = "roles/iam.workloadIdentityUser"
 
@@ -239,9 +240,4 @@ resource "google_iam_workload_identity_pool_provider" "truefoundry_platform_feat
 moved {
   from = google_service_account.truefoundry_platform_feature_service_account
   to   = google_service_account.truefoundry_platform_feature_service_account[0]
-}
-
-moved {
-  from = google_service_account_iam_binding.truefoundry_platform_feature_service_account_workload_identity_binding[0]
-  to   = google_service_account_iam_binding.truefoundry_platform_feature_service_account_workload_identity_binding
 }
