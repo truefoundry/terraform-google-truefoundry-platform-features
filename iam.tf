@@ -247,6 +247,6 @@ moved {
 }
 
 moved {
-  from = google_service_account_iam_binding.truefoundry_platform_feature_service_account_key_binding[0]
-  to   = google_service_account_iam_binding.truefoundry_platform_feature_service_account_key_binding
+  from = google_service_account_iam_binding.truefoundry_platform_feature_service_account_workload_identity_binding[0]
+  to   = google_service_account_iam_binding.truefoundry_platform_feature_service_account_workload_identity_binding
 }
