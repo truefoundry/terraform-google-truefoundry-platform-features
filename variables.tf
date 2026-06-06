@@ -46,9 +46,14 @@ variable "service_account_key_creation_enabled" {
 }
 
 variable "existing_service_account_email" {
-  description = "Use existing service account email"
+  description = "Use existing service account email. If service_account_enabled is false, this variable is required."
   type        = string
   default     = ""
+
+  validation {
+    condition     = var.service_account_enabled || var.existing_service_account_email != ""
+    error_message = "existing_service_account_email is empty when service_account_enabled is false. Please pass the existing service account email."
+  }
 }
 
 variable "service_account_enable_override" {
