@@ -56,6 +56,12 @@ variable "existing_service_account_email" {
   }
 }
 
+variable "existing_service_account_project" {
+  description = "GCP project of the existing service account. Required when existing_service_account_email belongs to a different project than var.project."
+  type        = string
+  default     = ""
+}
+
 variable "service_account_iam_binding_enabled" {
   description = "Enable service account IAM binding. If service_account_enabled is false, this variable will override the IAM bindings for the serviceaccount passed in existing_service_account_email."
   type        = bool
