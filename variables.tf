@@ -110,6 +110,30 @@ variable "service_account_keyless_k8s_serviceaccount_name" {
   default     = "truefoundry"
 }
 
+variable "service_account_keyless_pool_enable_override" {
+  description = "Enable overriding the workload identity pool ID. You need to pass service_account_keyless_pool_override_id to set the pool ID."
+  type        = bool
+  default     = false
+}
+
+variable "service_account_keyless_pool_override_id" {
+  description = "Workload identity pool ID. Only used if service_account_keyless_pool_enable_override is enabled."
+  type        = string
+  default     = ""
+}
+
+variable "service_account_keyless_provider_enable_override" {
+  description = "Enable overriding the workload identity pool provider ID. You need to pass service_account_keyless_provider_override_id to set the provider ID."
+  type        = bool
+  default     = false
+}
+
+variable "service_account_keyless_provider_override_id" {
+  description = "Workload identity pool provider ID. Only used if service_account_keyless_provider_enable_override is enabled."
+  type        = string
+  default     = ""
+}
+
 ################################################################################
 ## Flyte Propeller
 ################################################################################

@@ -210,8 +210,8 @@ resource "google_service_account_key" "truefoundry_platform_feature_service_acco
 resource "google_iam_workload_identity_pool" "truefoundry_platform_feature_pool" {
   count                     = var.service_account_keyless_enabled ? 1 : 0
   project                   = var.project
-  workload_identity_pool_id = substr("${var.cluster_name}-tfy-pool", 0, 32)
-  display_name              = "${var.cluster_name}-tfy-pool"
+  workload_identity_pool_id = local.workload_identity_pool_id
+  display_name              = local.workload_identity_pool_id
   description               = "Workload identity pool for TrueFoundry platform on ${var.cluster_name}"
 }
 
@@ -220,8 +220,8 @@ resource "google_iam_workload_identity_pool_provider" "truefoundry_platform_feat
   count                              = var.service_account_keyless_enabled ? 1 : 0
   project                            = var.project
   workload_identity_pool_id          = google_iam_workload_identity_pool.truefoundry_platform_feature_pool[0].workload_identity_pool_id
-  workload_identity_pool_provider_id = substr("${var.cluster_name}-tfy-oidc", 0, 32)
-  display_name                       = "${var.cluster_name}-tfy-oidc"
+  workload_identity_pool_provider_id = local.workload_identity_provider_id
+  display_name                       = local.workload_identity_provider_id
 
   oidc {
     issuer_uri = var.service_account_keyless_oidc_issuer_url
