@@ -46,9 +46,26 @@ variable "service_account_key_creation_enabled" {
 }
 
 variable "existing_service_account_email" {
-  description = "Use existing service account email"
+  description = "Use existing service account email. If service_account_enabled is false, this variable is required. IMPORTANT: This will override the IAM bindings for the serviceaccount passed in existing_service_account_email. To avoid this, please set service_account_iam_binding_enabled to false."
   type        = string
   default     = ""
+
+  validation {
+    condition     = var.service_account_enabled || var.existing_service_account_email != ""
+    error_message = "existing_service_account_email is empty when service_account_enabled is false. Please pass the existing service account email."
+  }
+}
+
+variable "existing_service_account_project" {
+  description = "GCP project of the existing service account. Required when existing_service_account_email belongs to a different project than var.project."
+  type        = string
+  default     = ""
+}
+
+variable "service_account_iam_binding_enabled" {
+  description = "Enable service account IAM binding. If service_account_enabled is false, this variable will override the IAM bindings for the serviceaccount passed in existing_service_account_email."
+  type        = bool
+  default     = true
 }
 
 variable "service_account_enable_override" {
@@ -91,6 +108,30 @@ variable "service_account_keyless_k8s_serviceaccount_name" {
   description = "Kubernetes service account name that will impersonate the GCP service account. Required when service_account_keyless_enabled is true"
   type        = string
   default     = "truefoundry"
+}
+
+variable "service_account_keyless_pool_enable_override" {
+  description = "Enable overriding the workload identity pool ID. You need to pass service_account_keyless_pool_override_id to set the pool ID."
+  type        = bool
+  default     = false
+}
+
+variable "service_account_keyless_pool_override_id" {
+  description = "Workload identity pool ID. Only used if service_account_keyless_pool_enable_override is enabled."
+  type        = string
+  default     = ""
+}
+
+variable "service_account_keyless_provider_enable_override" {
+  description = "Enable overriding the workload identity pool provider ID. You need to pass service_account_keyless_provider_override_id to set the provider ID."
+  type        = bool
+  default     = false
+}
+
+variable "service_account_keyless_provider_override_id" {
+  description = "Workload identity pool provider ID. Only used if service_account_keyless_provider_enable_override is enabled."
+  type        = string
+  default     = ""
 }
 
 ################################################################################
